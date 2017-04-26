@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+
+
+{% block content %}
+<form method="POST" style="float: left; width: 50%">
+    <input type="text" placeholder="Enter some text here and hit ENTER..." style="min-width: 500px">
+</form><br><br><br><br>
+<ul></ul>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+(function() {
+// Let's open a little websocket connection to the backend server
+var socket = null;
+function createSocket() {
+    socket = new WebSocket('ws://' + window.location.host + '/chat');
+    if (socket) {
+        socket.onmessage = function(e) {
+            var newLine = document.createElement('li');
+            var previousFirst = document.querySelector('li');
+            newLine.innerText = e.data;
+            document.querySelector('ul').insertBefore(newLine, previousFirst);
+        };
+     // When the backend reloads, the connection will be lost.
+     // This will reopen it after a bit of a cooldown period.
+     socket.onclose = function(e) {
+            if (e.code === 1006) {
+        window.setTimeout(createSocket, 2000);
+            }
+        };
+    }
+}
+createSocket();
+
+// Now let's create our end of the chat window:
+var form = document.querySelector('form');
+var input = document.querySelector('input');
+form.addEventListener('submit', function(evt) {
+    evt.preventDefault();
+    socket.send(input.value);
+    input.value = "";
+}, false);
+            })();
+        </script>
+{% endblock scripts %}

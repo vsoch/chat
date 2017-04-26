@@ -1,0 +1,3 @@
+GOOGLE_BUCKET_NAME="mybucket"
+SECRET_KEY='bogus'
+DEBUG=True

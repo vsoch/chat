@@ -1,0 +1,22 @@
+version: '2'
+services:
+  app:
+    extends:
+      file: docker-compose.base.yml
+      service: interfaceserver
+    volumes:
+      - .:/app
+      - ./static:/var/www/static
+      - ./images:/var/www/images
+    depends_on:
+      - database
+      - redis
+    command: python3 manage.py runserver 0.0.0.0:8000
+  database:
+    extends:
+      file: docker-compose.base.yml
+      service: database
+  redis:
+    extends:
+      file: docker-compose.base.yml
+      service: redis

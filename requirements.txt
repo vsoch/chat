@@ -1,0 +1,6 @@
+django===1.10.7
+channels===1.1.3
+daphne===1.2.0
+haikunator
+asgi_redis===1.3.0
+psycopg2==2.6.1
