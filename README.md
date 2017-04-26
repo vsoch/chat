@@ -9,7 +9,7 @@ A real time, collaborative survey application for Stanford University.
 First, build the image.
 
 ```
-docker build -t vanessa/chat .
+docker-compose build
 ```
 
 Then, start with docker compose:
